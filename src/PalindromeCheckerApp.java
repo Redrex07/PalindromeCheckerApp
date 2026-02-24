@@ -2,27 +2,52 @@ import java.util.*;
 
 public class PalindromeCheckerApp {
 
-    // ===== UC11 — Object-Oriented Palindrome Service =====
-    static class PalindromeService {
+    // ===== UC12 — Strategy Pattern =====
 
-        public boolean isPalindrome(String text) {
+    // Strategy Interface
+    interface PalindromeStrategy {
+        boolean check(String input);
+    }
 
-            // Remove spaces and convert to lowercase
-            String cleanedText = text.replaceAll("\\s+", "").toLowerCase();
+    // Strategy 1 — Reverse String Method
+    static class ReverseStrategy implements PalindromeStrategy {
+        public boolean check(String input) {
+            String reversed = new StringBuilder(input).reverse().toString();
+            return input.equalsIgnoreCase(reversed);
+        }
+    }
 
-            int start = 0;
-            int end = cleanedText.length() - 1;
+    // Strategy 2 — Two Pointer Method
+    static class TwoPointerStrategy implements PalindromeStrategy {
+        public boolean check(String input) {
 
-            // Compare characters from both ends
-            while (start < end) {
-                if (cleanedText.charAt(start) != cleanedText.charAt(end)) {
+            input = input.toLowerCase();
+            int left = 0;
+            int right = input.length() - 1;
+
+            while (left < right) {
+                if (input.charAt(left) != input.charAt(right))
                     return false;
-                }
-                start++;
-                end--;
+                left++;
+                right--;
             }
             return true;
         }
     }
 
+    // ===== MAIN METHOD =====
+    public static void main(String[] args) {
+
+        String word = "Level";
+
+        PalindromeStrategy strategy;
+
+        // Using Reverse Strategy
+        strategy = new ReverseStrategy();
+        System.out.println("Reverse Strategy: " + strategy.check(word));
+
+        // Using Two Pointer Strategy
+        strategy = new TwoPointerStrategy();
+        System.out.println("Two Pointer Strategy: " + strategy.check(word));
+    }
 }
