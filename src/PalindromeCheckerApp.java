@@ -2,31 +2,27 @@ import java.util.*;
 
 public class PalindromeCheckerApp {
 
-    public static boolean isPalindrome(String input) {
+    // ===== UC11 — Object-Oriented Palindrome Service =====
+    static class PalindromeService {
 
-        // Remove spaces & convert to lowercase
-        String cleaned = input.replaceAll("\\s+", "").toLowerCase();
+        public boolean isPalindrome(String text) {
 
-        int left = 0;
-        int right = cleaned.length() - 1;
+            // Remove spaces and convert to lowercase
+            String cleanedText = text.replaceAll("\\s+", "").toLowerCase();
 
-        while (left < right) {
-            if (cleaned.charAt(left) != cleaned.charAt(right))
-                return false;
-            left++;
-            right--;
+            int start = 0;
+            int end = cleanedText.length() - 1;
+
+            // Compare characters from both ends
+            while (start < end) {
+                if (cleanedText.charAt(start) != cleanedText.charAt(end)) {
+                    return false;
+                }
+                start++;
+                end--;
+            }
+            return true;
         }
-
-        return true;
     }
 
-    public static void main(String[] args) {
-
-        String text = "A man a plan a canal Panama";
-
-        boolean result = isPalindrome(text);
-
-        System.out.println("\"" + text + "\"" +
-                (result ? " is Palindrome" : " is NOT Palindrome"));
-    }
 }
